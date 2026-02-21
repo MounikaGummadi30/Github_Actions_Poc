@@ -19,9 +19,9 @@ jobs:
     - name: Configure AWS
       uses: aws-actions/configure-aws-credentials@v2
       with:
-        aws-access-key-id: AKIAQETNHJ4A4QCBRUND
-        aws-secret-access-key: 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
-        aws-region: ap-south-1b
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-south-1
 
     - name: Upload to S3
       run: aws s3 cp app.zip s3://pbizapps-artifacts-bucket/
@@ -29,12 +29,11 @@ jobs:
     - name: Deploy to EC2
       uses: appleboy/ssh-action@v0.1.7
       with:
-        host: 13.232.85.104
+        host: ${{ secrets.EC2_HOST }}
         username: ec2-user
-        key: -----BEGIN RSA PRIVATE KEY--MIIEowIBAAKCAQEAyx2yLnRHTxW5g0kbm1jvImjmw1RmRUVaUpkixq4ddHNDjCGWphemmqBhKIZYp4DlOgazyPc24ickn6r11zRJVdnV2eHnYsQu5Mymx59vx6tq3Fx0yRzhDceuewudezLUOjkqboIrIOVaG1PKeNW5LM22EdSb6gC3xqQ3JNLEYCbDwyiVXOXiir8MxcfflxdAyhkOVtcWjlQ9gfp4/oCD3oMgXXGKDoCWAhqWvuzXT0Hynl5dxflh2LmrjhWZGUfCc1TUIqDlfTJH8IlAd5TJddUxBCnKvuVmZg8Rf2bNh1EMv3/LjfUf7U3KCK3NqLhR+YCJdzAQ5gYE8qbd21FQIDAQABAoIBAAWOlW5h7gWC4aVu3Zt9bmVxm0aiy31/rT3vRJ1M9a+usi5OVuBAo7R+PtWM3yo2w20BXSyAa1AyuP7WYj50SraAdZxgzp9jIpJN3kDZVQUIwIV3TNXEMEoD5S2Cwfk/tenS1iPqIa9Otki+GIV/RbPbF61IWnPCJU5zlS0nzP02iGIvXNd5VS+PRbaqFoGYhwBUb97Nj9LrPzAxCBZR9OGJf6CCguqxv3lVX4mj6yWlOfXAHXbtc6CdAPXfIA3jB0BlfIewlkX660CO9AZV8byTfE4WHQKmXy3wcIAKluDR8guhhbLAzpUTbohBtVFvmoaRMa3mrzDMYJmfHXqECgYEA7gRIweUQTyn5JmT8O/kAN5Ff7cZK4jwLvdd+ugUceAn5dSQaaIW06Wvmh93WBlb6xCqVKVq/YK4mWI1TQ4FZlx718HClkjmSd7K09D2j+t5L21hib71jPOD9ZoREYfdSQLxVG0f2mKcMl9hk2PzVyDKs3rn4j676YSNZdoncZkCgYEA2nZcxAkNOrv6Hr9/DKXfFaFzDRmJJq9J+GG1d+opgHuDAQhz2wIqfPMQaBQV3zOhHBiTM9TQgE0aiNbMvfdrEWK4W2TuXNL8zlZ5klTMFYH0QWoBehm2EU9mw03x43/KXP9UzNbL1pX1fEu3VtbLZMK1ecQTQaW6SC+EcetERN0CgYAGXOb1CAKfmyel9x0nHUj8M061NI/b7G8D7DbfEjPooZuhng12rdxgQRowl6WZFcouZFUIffyPwRgVVfHb5CFZAOLiQqCqgA+CU6yyutMfjFP5CJuK6yf1VK06a5v5NACeaw24jBJF7Ezwq8wX/JwMwDurAKYiTjsHyxtclbBoQQKBgGvbLAmM/n8U93Pez3cLHYysXQUGqnPy7u42L0W40iygzhjgd3KVKyztRBhecj30W4Jnj6VzWE0/w+zPro7QR0gRCy7NAOYF0A36WWZf/jOZC03jOsfbog1T2L1RIsxOFOZq+BF2/VhrAVlzGqPOXPRvY8Ugv1SORoSe61Sni3xAoGBANmLW0igKezV1tZfTOeOVor1rn6L40WT8G2apHaowYd47XzuUsg0sUOa/SE4fE9TfebLU7uIynS1C8b0dKtPp2eAROzh1RPTcl9bECFRVUhNtGnKZylNlPG7tbaNo/x2nM8/+jcjdYBjUxzZRdGSneSXOd88mhFMLknESMTft/tL-----END RSA PRIVATE KEY-----
+        key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           aws s3 cp s3://pbizapps-artifacts-bucket/app.zip .
           unzip -o app.zip
           chmod +x app.sh
           ./app.sh
-
