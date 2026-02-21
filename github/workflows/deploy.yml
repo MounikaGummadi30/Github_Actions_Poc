@@ -24,7 +24,7 @@ jobs:
         aws-region: ap-south-1
 
     - name: Upload to S3
-      run: aws s3 cp app.zip s3://pbizapps-artifacts/
+      run: aws s3 cp app.zip s3://pbizapps-artifactss/
 
     - name: Deploy to EC2
       uses: appleboy/ssh-action@v0.1.7
@@ -33,7 +33,7 @@ jobs:
         username: ec2-user
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          aws s3 cp s3://pbizapps-artifacts/app.zip .
+          aws s3 cp s3://pbizapps-artifactss/app.zip .
           unzip -o app.zip
           chmod +x app.sh
           ./app.sh
