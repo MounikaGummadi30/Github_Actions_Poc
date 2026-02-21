@@ -24,7 +24,7 @@ jobs:
         aws-region: ap-south-1
 
     - name: Upload to S3
-      run: aws s3 cp app.zip s3://pbizapps-artifacts-bucket/
+      run: aws s3 cp app.zip s3://pbizapps-artifacts/
 
     - name: Deploy to EC2
       uses: appleboy/ssh-action@v0.1.7
