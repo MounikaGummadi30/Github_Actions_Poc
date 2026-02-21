@@ -33,7 +33,7 @@ jobs:
         username: ec2-user
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          aws s3 cp s3://pbizapps-artifacts-bucket/app.zip .
+          aws s3 cp s3://pbizapps-artifacts/app.zip .
           unzip -o app.zip
           chmod +x app.sh
           ./app.sh
