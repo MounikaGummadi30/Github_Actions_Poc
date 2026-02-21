@@ -19,9 +19,9 @@ jobs:
     - name: Configure AWS
       uses: aws-actions/configure-aws-credentials@v2
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-south-1
+        aws-access-key-id: AKIAQETNHJ4A4QCBRUND
+        aws-secret-access-key: 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
+        aws-region: ap-south-1b
 
     - name: Upload to S3
       run: aws s3 cp app.zip s3://pbizapps-artifacts-bucket/
